@@ -1,7 +1,9 @@
 import { connDB } from './config/mongo.js';
+import cookieParser from 'cookie-parser';
 
 import express from 'express';
 import { sessionRouter } from './routes/sessions.router.js';
+import passport from 'passport';
 const PORT=3000;
 
 const app=express();
@@ -12,6 +14,11 @@ connDB();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
+app.use(passport.initialize());
+
+
+
 
 app.get('/',(req,res)=>{
   res.setHeader('Content-Type','text/plain');
@@ -20,6 +27,7 @@ app.get('/',(req,res)=>{
 
 //Routes
 app.use('/api/sessions',sessionRouter);
+
 
 
 
